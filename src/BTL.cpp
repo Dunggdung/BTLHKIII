@@ -52,22 +52,59 @@ ostream& operator << (ostream& os, const HocSinh& hs) {
 }
 istream& operator >> (istream& is, Diem& diem){
     fflush(stdin);
-    cout<<"Nhap Diem Toan: ";
-	is >> diem.Toan;
-    cout<<"Nhap Diem Ly: ";
-	is >> diem.Ly;
-    cout<<"Nhap Diem Hoa: ";
-	is >> diem.Hoa;
-    cout<<"Nhap Diem Van: ";
-	is >> diem.Van;
-    cout<<"Nhap Diem Su: ";
-	is >> diem.Su;
-    cout<<"Nhap Diem Dia: ";
-	is >> diem.Dia;
+    do {
+        cout<<"Nhap Diem Toan: ";
+	    is >> diem.Toan;
+        if (diem.Toan < 0.0 || diem.Toan >10.0){
+            cout <<"Nhap Lai Diem Toan: ";
+            is >> diem.Toan;
+        }
+    }while(diem.Toan < 0.0 || diem.Toan >10.0);
+    do {
+        cout<<"Nhap Diem Ly: ";
+	    is >> diem.Ly;
+        if (diem.Toan < 0.0 || diem.Ly >10.0){
+            cout <<"Nhap Lai Diem Ly: ";
+            is >> diem.Ly;
+        }
+    }while(diem.Ly < 0.0 || diem.Ly >10.0);
+    do {
+        cout<<"Nhap Diem Hoa: ";
+	    is >> diem.Hoa;
+        if (diem.Hoa < 0.0 || diem.Hoa >10.0){
+            cout <<"Nhap Lai Diem Hoa: ";
+            is >> diem.Hoa;
+        }
+    }while(diem.Hoa < 0.0 || diem.Hoa >10.0);
+    do {
+        cout<<"Nhap Diem Van: ";
+	    is >> diem.Van;
+        if (diem.Van < 0.0 || diem.Van >10.0){
+            cout <<"Nhap Lai Diem Van: ";
+            is >> diem.Van;
+        }
+    }while(diem.Van < 0.0 || diem.Van >10.0);
+    do {
+        cout<<"Nhap Diem Su: ";
+	    is >> diem.Su;
+        if (diem.Su < 0.0 || diem.Su >10.0){
+            cout <<"Nhap Lai Diem Su: ";
+            is >> diem.Su;
+        }
+    }while(diem.Su < 0.0 || diem.Su >10.0);
+    do {
+        cout<<"Nhap Diem Dia: ";
+	    is >> diem.Dia;
+        if (diem.Dia < 0.0 || diem.Dia >10.0){
+            cout <<"Nhap Lai Diem Dia: ";
+            is >> diem.Dia;
+        }
+    }while(diem.Dia < 0.0 || diem.Dia >10.0);
     return is;
 }
 ostream& operator << (ostream& os,const Diem& diem){
     os <<endl<< "Toan: " << diem.Toan << " |Ly: " << diem.Ly <<" |Hoa: "<< diem.Hoa <<" |Van: "<<diem.Van<<" |Su: "<<diem.Su<<" |Dia: "<< diem.Dia<<endl;
+    return os;
 }
 int main (){
     HocSinh a;
