@@ -17,6 +17,74 @@ class Diem{
         friend istream& operator >>(istream &is, Diem &diem);
         friend ostream& operator <<(ostream &os, Diem diem);
 };
+void HocSinh::NhapNS()
+{ 
+    do{
+        cout<<"\nNgay: ";
+        cin>>Ngay;
+        cout<<"Thang: ";
+        cin>>Thang;
+        if(KiemTra()==false){
+            cout<<endl<<"Nhap lai ngay thang!!"<<endl;
+            cout<<"\nNgay: ";
+            cin>>Ngay;
+            cout<<"Thang: ";
+            cin>>Thang;
+        }
+    }while(KiemTra()==false);
+    do{
+    cout<<"Nam: ";
+    cin>>Nam;
+    if(Nam > 2021 || Nam <= 0){
+        cout<<"Nhap lai nam sinh!!";
+        cout<<endl<<"Nam: ";
+        cin>>Nam
+    }
+    }while(Nam > 2021 || Nam <= 0);
+}
+bool HocSinh::KiemTra(){
+{
+    //kiểm tra ngày tháng
+    bool KiemTra = true;
+    if (Thang < 0 || Thang > 12)
+    {
+        KiemTra = false;
+    }
+    else
+    {
+        switch (Thang)
+        {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            if (Ngay < 1 || Ngay > 31)
+            {
+                KiemTra = false;
+            }
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            if (Ngay < 1 || Ngay > 30)
+            {
+                KiemTra = false;
+            }
+            break;
+        case 2:
+            if (Nam % 4 == 0 && Ngay < 1 || Ngay > 29)
+            {
+                KiemTra = false;
+            }
+            break;
+        }
+    }
+    return KiemTra;
+}
 istream& operator >>(istream &is, HocSinh &hs){
     fflush(stdin);
     cout<<"\nNhap MSHS: ";
