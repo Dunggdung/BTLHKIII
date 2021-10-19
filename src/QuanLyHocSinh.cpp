@@ -3,22 +3,24 @@
 using namespace std;
 class HocSinh{
     private:
-        string NgaySinh;
+        int Ngay, Thang, Nam;
         string Ten,MSHS,Lop,DiaChi;
     public:
+        void NhapNS();
+        bool KiemTra();
         friend istream& operator >>(istream &is, HocSinh &hs);
         friend ostream& operator <<(ostream &os, HocSinh hs);
 };
 class Diem{
     private:
         float Toan,Ly,Hoa,Van,Su,Dia;
-    //  float DiemTB;
     public:
         friend istream& operator >>(istream &is, Diem &diem);
         friend ostream& operator <<(ostream &os, Diem diem);
 };
+
 void HocSinh::NhapNS()
-{ 
+{ //Nhap ngay thang nam
     do{
         cout<<"\nNgay: ";
         cin>>Ngay;
@@ -38,7 +40,7 @@ void HocSinh::NhapNS()
     if(Nam > 2021 || Nam <= 0){
         cout<<"Nhap lai nam sinh!!";
         cout<<endl<<"Nam: ";
-        cin>>Nam
+        cin>>Nam;
     }
     }while(Nam > 2021 || Nam <= 0);
 }
@@ -85,6 +87,7 @@ bool HocSinh::KiemTra(){
     }
     return KiemTra;
 }
+}
 istream& operator >>(istream &is, HocSinh &hs){
     fflush(stdin);
     cout<<"\nNhap MSHS: ";
@@ -93,8 +96,9 @@ istream& operator >>(istream &is, HocSinh &hs){
     cout<<"\nNhap Ho Ten: ";
     getline(is,hs.Ten);
     fflush(stdin);
-    cout<<"\nNhap Ngay Thang Nam sinh(VD: 14/07/2002): ";
-    getline(is,hs.NgaySinh);
+    cout<<"\nNhap Ngay Thang Nam sinh(VD: 14/07/2002): "<<endl;
+    hs.NhapNS();
+    hs.KiemTra();
     fflush(stdin);
     cout<<"\nNhap Lop hoc: ";
     getline(is,hs.Lop);
@@ -106,7 +110,7 @@ istream& operator >>(istream &is, HocSinh &hs){
 ostream& operator <<(ostream &os, HocSinh hs){
     os<<endl<<"MSHS: "<<hs.MSHS<<endl;
     os<<"Ho Ten: "<<hs.Ten<<endl;
-    os<<"Ngay Thang Nam sinh: "<<hs.NgaySinh<<endl;
+    os<<"Ngay Thang Nam sinh: "<<hs.Ngay<<"/"<<hs.Thang<<"/"<<hs.Nam<<endl;
     os<<"Lop: "<<hs.Lop<<endl;
     os<<"Dia Chi: "<<hs.DiaChi<<endl;
     return os;
