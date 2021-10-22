@@ -4,7 +4,7 @@
 using namespace std;
 class Diem;
 
-class HocSinh{
+class HocSinh: public Diem{
 	protected:
 	  string  NgaySinh, Ten , Lop , DiaChi, MSHS;
 	 
@@ -13,6 +13,7 @@ class HocSinh{
     	HocSinh();
     	HocSinh(string Ten, string Lop, string DiaChi, string NgaySinh, string MSHS);
     	~HocSinh();
+        friend void sapXepTen(HocSinh s[], int n);
 		friend istream& operator >> (istream &is, HocSinh &hs);
 		friend ostream& operator << (ostream &os,const HocSinh &hs1);
 		//friend void get(HocSinh a,Diem b);
@@ -29,6 +30,7 @@ class Diem {
 		Diem();
 		Diem(float Toan,float Ly,float Hoa ,float Van ,float Su,float Dia);
 		~Diem();
+        float DiemTB(int n);
 		friend istream& operator >>(istream &is, Diem &hs);
 		friend ostream& operator << (ostream &os,const Diem &b);
 	//	friend void get(HocSinh a, Diem b);
@@ -54,6 +56,49 @@ HocSinh::~HocSinh(){
 	this->NgaySinh="";
 	this->MSHS="";
 }
+void sapXepTen(HocSinh s[], int n){
+    HocSinh temp;
+    for (int i = 0; i < n-1; i++){
+        for(int j = i+1; j < n; j++){
+            if (strcmp(s[i].Ten,s[j].Ten) > 0){
+                temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+            }
+        }
+    }
+}
+void sapXepDiemTB(HocSinh s[], int n){
+    HocSinh temp ;
+    for (int i = 0; i < n -1; i++){
+        for(int j = i+1; j < n; j++){
+            if (s[i].DiemTB() > s[i].DiemTB()){
+                temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+            }
+        }
+    }
+}
+void xeploai (float a){
+    // Xếp loại theo tiêu chí:
+    //     - Giỏi (>= 8.0)
+    //     - Khá (>= 7.0)
+    //     - Trung bình (>= 5.0)
+    //     - Yếu (< 5)
+    if (a >= 8.0){
+        cout <<"Gioi" << endl;
+    }
+    else if (a >=7.0 && a < 8.0){
+        cout <<"Kha"<< endl;
+    }
+    else if (a >= 5.0 && a < 7.0){
+        cout <<"Trung Binh"<< endl;
+    }
+    else {
+        cout <<"Yeu"<< endl;
+    }
+}
 Diem::Diem(){
 	Toan=0;
 	Ly=0;
@@ -77,6 +122,11 @@ Diem::~Diem(){
 	this->Van=0;
 	this->Su=0;
 	this->Dia=0;
+}
+float Diem::DiemTB(){
+    float diem;
+    diem = (Toan+Ly+Hoa+Van+Su+Dia)/6;
+    return diem;
 }
 istream& operator >>(istream &is, HocSinh &hs){
 	fflush(stdin);
@@ -103,8 +153,9 @@ ostream& operator << (ostream& os, const HocSinh& hs) {
     os << "Ngay Sinh: " << hs.NgaySinh << endl;
     os << "Dia Chi: " << hs.DiaChi<< endl;
     return os;*/
-     os<<"\tTen     \t\tLop     \t\tDia chi     \t\tMa hoc Sinh "<<endl;
+    os<<"\tTen     \t\tLop     \t\tDia chi     \t\tMa hoc Sinh "<<endl;
 	os<<"\t"<<hs.Ten<<"     \t\t"<<hs.Lop<<"     \t\t"<<hs.DiaChi<<"     \t\t"<<hs.MSHS<<endl;
+    return os;
 }
 istream& operator >> (istream& is, Diem& diem){
     fflush(stdin);
@@ -124,7 +175,7 @@ istream& operator >> (istream& is, Diem& diem){
 }
 ostream& operator << (ostream& os,const Diem& b){
     //os <<endl<< "Toan: " << diem.Toan << " Ly: " << diem.Ly <<" Hoa: "<< diem.Hoa <<" Van: "<<diem.Van<<" Su: "<<diem.Su<<"Dia: "<< diem.Dia<<endl;
-      os<<"\n  Diem Cua Hoc Sinh : "<<endl;
+
      os<<"\tToan : " <<b.Toan<<"  |\tVan : "<<b.Van<<" |\tSu : "<<b.Su  <<" |\tDia : " <<b.Dia<<"  |\tLy : "<<b.Ly << " |\tHoa: " <<b.Hoa<<endl;
 	  //os<<"\t"<<b.Toan<<"    \t"<<b.Van<<"    \t"<<b.Su<<"    \t"<<b.Dia<<"    \t"<<b.Ly<<"    \t\t"<<b.Hoa;
     return os;
