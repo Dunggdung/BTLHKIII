@@ -5,6 +5,7 @@
 #include<math.h>
 #include<conio.h>
 #include<vector>
+#include<algorithm>// sort dùng quick sort kết hợp merge nên phải dùng thư viện này
 using namespace std;
 #include<iostream>
 using namespace std;
@@ -30,8 +31,7 @@ NgaySinh::NgaySinh(int ngay ,int thang, int nam){
 	this->Thang=0;
 	this->Nam=0;
 }
-NgaySinh::~NgaySinh(){
-}
+NgaySinh::~NgaySinh(){}
 void NgaySinh::Nhap1(){ //Nhap ngay thang nam
     cout<<"\n\t\t\t Nhap Ngay sinh( 23/02/2002)"<<endl;
     do{
@@ -120,8 +120,7 @@ Nguoi::Nguoi(string Ten,string DiaChi):NgaySinh(Ngay,Thang,Nam){
 	this->DiaChi=DiaChi;
 	this->Ten=Ten;
 }
-Nguoi::~Nguoi(){
-}
+Nguoi::~Nguoi(){}
 void Nguoi:: Nhap2(){
 	fflush(stdin);
 	cout<<"\n\t\t Nhap ten :";
@@ -149,6 +148,7 @@ class Diem: public Nguoi {
 		Diem();
 		Diem(float Toan,float Ly,float Hoa ,float Van ,float Su,float Dia);
 		~Diem();
+        float diemTB();
 	 	void Nhap3();
 		void Xuat3();
 };
@@ -176,12 +176,17 @@ Diem::~Diem(){
 	 this->Su=0;
      this->Dia=0;
 }
+float Diem::diemTB(){
+    float diem;
+    diem = (Toan+Ly+Hoa+Van+Su+Dia)/6;
+    return diem;
+}
 void Diem::Nhap3() {
 	Nguoi::Nhap2();
     fflush(stdin);
-    cout<<setw(50)<<"\n\t\tNhap Diem  Cua Hoc Sinh : ";
+    cout<<setw(50)<<endl<<"\t\tNhap Diem Cua Hoc Sinh : ";
     do {
-        cout<<"\n\t\tNhap Diem Toan: ";
+        cout<<endl<<"\t\tNhap Diem Toan: ";
 	    cin >> Toan;
         if (Toan < 0.0 || Toan >10.0){
             cout <<"\t\tNhap Lai Diem Toan: ";
@@ -252,6 +257,9 @@ class HocSinh: public Diem{
         string getMSHS(){
             return this->MSHS;
         }
+        string getTen(){
+            return this->Ten;
+        }
 	    void Nhap4();
 	    void Xuat4();
 };
@@ -289,45 +297,30 @@ void HocSinh::Xuat4(){
     cout<<"\t\t"<<setw(8)<<left<<A.STT<<setw(25)<<left<<Ten<<setw(15)<<left<<DiaChi<<setw(10)<<left<<MSHS<<left<<Ngay<<"/"<<Thang<<"/"<<Nam<<endl;
 	Diem::Xuat3();
 }
-void input(HocSinh s[], int n){
-    for(int i=0; i<n; i++){
-        cout<<"\n\t\t\t\t Nhap Thong Tin Cua Hoc Sinh Thu  "<<i+1<<endl;
-         s[i].Nhap4();
-    }
-}
-void print(HocSinh s[], int n){
-    for(int i=0; i<n; i++){
-        cout<<"\n\t\t\t\tThong Tin hoc sinh thu  "<<i+1<<endl;
-        s[i].Xuat4();
-    }
-}
-// sap xep theo ten
-/*void sapXepTen(HocSinh s[], int n){
-    HocSinh temp;
-    for (int i = 0; i < n-1; i++){
-        for(int j = i+1; j < n; j++){
-            if (strcmp(s[i].Ten,s[j].Ten) > 0){
-                temp = s[i];
-                s[i] = s[j];
-                s[j] = temp;
-            }
-        }
-    }
-}
-// sap xep theo diem
-void sapXepDiemTB(HocSinh s[], int n){
-    HocSinh temp ;
-    for (int i = 0; i < n -1; i++){
-        for(int j = i+1; j < n; j++){
-            if (s[i].DiemTB() > s[i].DiemTB()){
-                temp = s[i];
-                s[i] = s[j];
-                s[j] = temp;
-            }
-        }
-    }
-}
-// xep loai
+// void input(HocSinh s[], int n){
+//     for(int i=0; i<n; i++){
+//         cout<<"\n\t\t\t\t Nhap Thong Tin Cua Hoc Sinh Thu  "<<i+1<<endl;
+//          s[i].Nhap4();
+//     }
+// }
+// void print(HocSinh s[], int n){
+//     for(int i=0; i<n; i++){
+//         cout<<"\n\t\t\t\tThong Tin hoc sinh thu  "<<i+1<<endl;
+//         s[i].Xuat4();
+//     }
+// }
+class sosanhTen{
+    public:
+        bool operator() (HocSinh first, HocSinh second) {
+            return first.getTen() > second.getTen();
+        }    
+};
+class sosanhDiem{
+    public:
+        bool operator() (HocSinh first, HocSinh second) {
+            return first.diemTB() > second.diemTB();
+        }   
+};
 void xeploai (float a){
     if (a >= 8.0){
         cout <<"Gioi" << endl;
@@ -341,7 +334,7 @@ void xeploai (float a){
     else {
         cout <<"Yeu"<< endl;
     }
-}*/
+}   
 class DanhSach{
     private:
         vector <HocSinh> HS;
@@ -351,7 +344,7 @@ class DanhSach{
             HS = vector<HocSinh>();
             int count = 0;
         }
-        bool Tim(string MSHS){
+        bool TonTai (string MSHS){
             bool tim = false;
             for(auto HocSinh = HS.begin(); HocSinh != HS.end(); ++HocSinh){
                 if(HocSinh->getMSHS() == MSHS){
@@ -361,111 +354,124 @@ class DanhSach{
             }
             return tim;
         }
-        void them(DanhSach HocSinh){
-            if(!this->Tim(HocSinh.getMSHS())){
-                this->HS.push_back(HocSinh);// NOTE: thêm 1 học sinh vào cuối vector
+        void Them(HocSinh hocsinh){
+            if(!this->TonTai(hocsinh.getMSHS())){
+                this->HS.push_back(hocsinh);// NOTE: thêm 1 học sinh vào cuối vector
                 count++;//NOTE: số lượng phần tử trong vector sẽ tăng lên 1
             }else{
-                cout<<"MSHS da bi xoa"<<endl;
+                cout<<"MSHS da ton tai"<<endl;
             }
         }
-        void xoa(string MSHS){
+        void Xoa(string MSHS){
             for(auto HocSinh = HS.begin(); HocSinh != HS.end(); ++HocSinh){
                 if(HocSinh->getMSHS() == MSHS){
                     HS.erase(HocSinh);
                 }
             }
         }
-        void xuat(){
+        void Xuat(){
             for (auto HocSinh = HS.begin(); HocSinh != HS.end(); ++HocSinh) {//NOTE: đi từ đầu đến cuối vector để in từng phần tử
-                HocSinh->print();
+                HocSinh->Xuat4();
                 cout<<endl;
             }
         }
+       // dùng quick sort kết hợp merge hàm sort là hàm có sẵn của vector
+       void sapXepTen(){
+           // duyệt từ học sinh đầu đến cuối nếu trùng điều kiện sắp xếp sẽ tự đông swap
+            std::sort(HS.begin(),HS.end(),sosanhTen());
+        }   
+        void sapXepDiemTB(){
+            std::sort(HS.begin(),HS.end(),sosanhDiem());
+        }
+        void xepLoai (){
+            for (auto HocSinh = HS.begin();HocSinh != HS.end(); ++HocSinh){
+                HocSinh->Xuat4();
+                xeploai(HocSinh->diemTB());
+            }
+        }
+        
 };
-bool sosanhTen(HocSinh a,HocSinh b){
-    string ten = false;
-    if (a.Ten == b.Ten){
-        ten = true;
-    }
-    return ten;
-}
-void menu(int n ){
-	//char fileName[] = "employee.txt";
-	int chon,b, flat = 1;
-	bool daNhap = false ;
-	while(flat){
-	    system("cls");
-        cout  <<"\t\t\t\t"<< "       CHUONG TRINH QUAN LY HOC SINH C/C++\n             ";
-        cout  <<"\t\t"<< "*************************MENU******************************\n";
-        cout  <<"\t\t\t"<< "**      1. Nhap Thong tin hoc sinh                       **\n";
-        cout  <<"\t\t\t"<< "**      2. Xuat thong tin hoc sinh.                      **\n";
-        cout  <<"\t\t\t"<< "**      3. Xoa hoc sinh theo ID.                         **\n";
-        cout  <<"\t\t\t"<< "**      4. Tim kiem hoc sinh theo ID.                   **\n";
-        cout  <<"\t\t\t"<< "**      5. Them 1 hoc sinh .                             **\n";  
-        cout  <<"\t\t\t"<< "**      6. Sap xep hoc sinh theo diem trung binh .      **\n";
-        cout  <<"\t\t\t"<< "**      7. Xep loai hoc sinh .                           **\n";  
-        cout  <<"\t\t\t"<< "**      8. Sap xep hoc sinh theo ten.                   **\n";
-        cout  <<"\t\t\t"<< "**      9. Thong ke hoc sinh theo tinh                  **\n";
-        cout  <<"\t\t\t"<< "**      10. Ghi danh sach hoc sinh vao file.             **\n";
-        cout  <<"\t\t\t"<< "**      0. Thoat                                         **\n";
-        cout  <<"\t\t\t"<< "***********************************************************\n";
-        cout  << "Nhap tuy chon: ";
-        cin >> chon;
-        switch(chon){
-            case 1:
-            		cout<<"\n Ban Da Chon Nhap Thong Tin  Hoc Sinh !";
-			        input(a,n);	
-			        cout<<"\n\t\t\t\t\t Ban da nhap thanh cong !\n";
-			        daNhap=true;
-		         	cout<<"\n\t\t\t\tVui long nhap phim bat ki de tiep tuc !";
-		        	getch();
-		        	break;
+// void menu(int n ){
+// 	//char fileName[] = "employee.txt";
+// 	int chon,b, flat = 1;
+// 	bool daNhap = false ;
+// 	while(flat){
+// 	    system("cls");
+//         cout  <<"\t\t\t\t"<< "       CHUONG TRINH QUAN LY HOC SINH C/C++\n             ";
+//         cout  <<"\t\t"<< "*************************MENU******************************\n";
+//         cout  <<"\t\t\t"<< "**      1. Nhap Thong tin hoc sinh                       **\n";
+//         cout  <<"\t\t\t"<< "**      2. Xuat thong tin hoc sinh.                      **\n";
+//         cout  <<"\t\t\t"<< "**      3. Xoa hoc sinh theo ID.                         **\n";
+//         cout  <<"\t\t\t"<< "**      4. Tim kiem hoc sinh theo ID.                    **\n";
+//         cout  <<"\t\t\t"<< "**      5. Them 1 hoc sinh .                             **\n";  
+//         cout  <<"\t\t\t"<< "**      6. Sap xep hoc sinh theo diem trung binh .       **\n";
+//         cout  <<"\t\t\t"<< "**      7. Xep loai hoc sinh .                           **\n";  
+//         cout  <<"\t\t\t"<< "**      8. Sap xep hoc sinh theo ten.                    **\n";
+//         cout  <<"\t\t\t"<< "**      9. Thong ke hoc sinh theo tinh                   **\n";
+//         cout  <<"\t\t\t"<< "**      10. Ghi danh sach hoc sinh vao file.             **\n";
+//         cout  <<"\t\t\t"<< "**      0. Thoat                                         **\n";
+//         cout  <<"\t\t\t"<< "***********************************************************\n";
+//         cout  << "Nhap tuy chon: ";
+//         cin >> chon;
+//         switch(chon){
+//             case 1:
+//             		cout<<"\n Ban Da Chon Nhap Thong Tin  Hoc Sinh !";
+// 			        input(a,n);	
+// 			        cout<<"\n\t\t\t\t\t Ban da nhap thanh cong !\n";
+// 			        daNhap=true;
+// 		         	cout<<"\n\t\t\t\tVui long nhap phim bat ki de tiep tuc !";
+// 		        	getch();
+// 		        	break;
                 
-            case 2:
-                    system("cls");
-			        if(daNhap){
-                       cout<<"\n Ban Da Chon Xuat Thong Tin  Hoc Sinh!";
-                       print(a,n);
-                    }
-			         else{
-                       cout<<"\\t\t\t\tnNhap DS hoc sinh truoc!!!!";
-                     }
-                      cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
-                      getch();
-                      break;
+//             case 2:
+//                     system("cls");
+// 			        if(daNhap){
+//                        cout<<"\n Ban Da Chon Xuat Thong Tin  Hoc Sinh!";
+//                        print(a,n);
+//                     }
+// 			         else{
+//                        cout<<"\\t\t\t\tnNhap DS hoc sinh truoc!!!!";
+//                      }
+//                       cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
+//                       getch();
+//                       break;
                    
-            case 3:
+//             case 3:
                 
-            case 4:
+//             case 4:
                
-            case 5:
+//             case 5:
                 
-            case 6:
+//             case 6:
                 
-            case 7:
+//             case 7:
                 
                    
-            case 8:
+//             case 8:
     
                
-            case 0:
+//             case 0:
                
-            default:
-                cout << "\n\t\t\t\tKhong co chuc nang nay!";
-                cout << "\n\t\t\t\tHay chon chuc nang trong hop menu.";
-                //pressAnyKey();
-                break;
-        }
-    }
-}
+//             default:
+//                 cout << "\n\t\t\t\tKhong co chuc nang nay!";
+//                 cout << "\n\t\t\t\tHay chon chuc nang trong hop menu.";
+//                 //pressAnyKey();
+//                 break;
+//         }
+//     }
+// }
 int main(){
 	system("color B4");
-    int n;
-    do{
-		cout<<" Nhap So Luong Hoc Sinh : ";
-		cin>>n;
-	}while(n<=0);
-	HocSinh a[n+1];
-	menu(n);
+    HocSinh a;
+    DanhSach b = DanhSach();
+    for(int i = 0; i < 3; i++){
+        a.Nhap4();
+        b.Them(a);
+    }
+    b.Xuat();
+    b.Xoa("001");
+    b.Xuat();
+    return 0;
+
+	// menu(n);
 }
