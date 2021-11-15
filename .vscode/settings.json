@@ -65,6 +65,8 @@
         "atomic": "cpp",
         "compare": "cpp",
         "*.tcc": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "memory_resource": "cpp",
+        "optional": "cpp"
     }
 }

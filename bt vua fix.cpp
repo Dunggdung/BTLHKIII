@@ -318,7 +318,7 @@ class quanlyHS{
           void NhapDS(int n);
 		  void XuatDS();
 		  void XoaHSID(string H);
-		  void TimKiemID(strinh H);	
+		  void TimKiemID(string H);	
 		  void ThemHS();
 		  void SapXepDTB();
 		  void SapXepName();
@@ -333,7 +333,6 @@ class quanlyHS{
              hs->Nhap4();
              HS.push_back(hs);
     }
- 	
  }
 void quanlyHS:: XuatDS(){
 	for(int i = 0 ;i < this->HS.size();i++){
