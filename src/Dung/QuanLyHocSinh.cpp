@@ -123,9 +123,9 @@ Nguoi::Nguoi(string Ten,string DiaChi):NgaySinh(Ngay,Thang,Nam){
 Nguoi::~Nguoi(){}
 void Nguoi:: Nhap2(){
 	fflush(stdin);
-	cout<<"\n\t\t Nhap ten :";
+	cout<<"\t\t Nhap ten :";
 	getline(cin,Ten);
-	cout<<"\n\t\t Nhap dia chi :";
+	cout<<"\t\t Nhap dia chi :";
     fflush(stdin);
     getline(cin,DiaChi);
     NgaySinh::Nhap1();
@@ -184,7 +184,7 @@ float Diem::diemTB(){
 void Diem::Nhap3() {
 	Nguoi::Nhap2();
     fflush(stdin);
-    cout<<setw(50)<<endl<<"\t\tNhap Diem Cua Hoc Sinh : ";
+    cout<<setw(50)<<endl<<"\tNhap Diem Cua Hoc Sinh : ";
     do {
         cout<<endl<<"\t\tNhap Diem Toan: ";
 	    cin >> Toan;
@@ -249,7 +249,7 @@ void Diem:: Xuat3(){
 class HocSinh: public Diem{
 	private:
 	  string   Lop , MSHS;
-	  static int STT;
+	  int STT ;
     public:
     	HocSinh();
     	HocSinh( string Lop, string MSHS);
@@ -260,10 +260,12 @@ class HocSinh: public Diem{
         string getTen(){
             return this->Ten;
         }
+        void setSTT(int STT){
+            this->STT = STT;
+        }
 	    void Nhap4();
 	    void Xuat4();
 };
-int HocSinh::STT=1;
 HocSinh::HocSinh():Diem(){
 	Lop ="";
 	MSHS="";
@@ -287,7 +289,6 @@ void HocSinh::Nhap4(){
 }
 void HocSinh::Xuat4(){
 	HocSinh A;
-	// stt bang thuoc tinh tinh
 	// ham setw no tu can do dong tu trai sang phai ghi ki tu tu phai sang trai
 	cout<<"\t\t\t\t\t THONG TIN HOC SINH \n"<<endl;
    	cout<<"\t\t"<<setw(8)<<left<<"STT "<<setw(25)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(10)<<left<<"MSHS"<<setw(25)<<left<<"Ngay Sinh"<<endl;
@@ -370,7 +371,9 @@ class DanhSach{
             }
         }
         void Xuat(){
+            int STT = 1;
             for (auto HocSinh = HS.begin(); HocSinh != HS.end(); ++HocSinh) {//NOTE: đi từ đầu đến cuối vector để in từng phần tử
+                HocSinh->setSTT(STT+1);
                 HocSinh->Xuat4();
                 cout<<endl;
             }
@@ -384,7 +387,9 @@ class DanhSach{
             std::sort(HS.begin(),HS.end(),sosanhDiem());
         }
         void xepLoai (){
+            int STT = 1;
             for (auto HocSinh = HS.begin();HocSinh != HS.end(); ++HocSinh){
+                HocSinh->setSTT(STT+1);
                 HocSinh->Xuat4();
                 xeploai(HocSinh->diemTB());
             }
@@ -464,13 +469,15 @@ int main(){
 	system("color B4");
     HocSinh a;
     DanhSach b = DanhSach();
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 1; i++){
+        cout <<"\t\t\tNhap Thong Tin Hoc Sinh Thu "<<i+1<<endl;
         a.Nhap4();
         b.Them(a);
     }
     b.Xuat();
     b.Xoa("001");
     b.Xuat();
+    getch();
     return 0;
 
 	// menu(n);

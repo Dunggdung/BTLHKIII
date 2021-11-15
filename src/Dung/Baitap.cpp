@@ -258,29 +258,29 @@ class HocSinh: public Diem{
 	    void Xuat4();
 };
 int HocSinh::STT=1;
-struct Node{
-    HocSinh data;
-    Node *next;
-};
-struct SList{
-    Node* head;
-    Node *tail;
-    long size;
-    // Node *CreatNode(HocSinh);
-    // void addLast(const HocSinh);
-}
-Node *SList::CreatNode(HocSinh){
-    Node*p= new Node;
-    p->data=HocSinh;
-    p->next=NULL;
-    return p;
-}
-Node *SList::addLast(const HocSinh){
-    Node *q = CreatNode(HocSinh);
-    q->next = p->next;
-    p->next=q;
-    size++;
-}
+// struct Node{
+//     HocSinh data;
+//     Node *next;
+// };
+// struct SList{
+//     Node* head;
+//     Node *tail;
+//     long size;
+//     // Node *CreatNode(HocSinh);
+//     // void addLast(const HocSinh);
+// }
+// Node *SList::CreatNode(HocSinh){
+//     Node*p= new Node;
+//     p->data=HocSinh;
+//     p->next=NULL;
+//     return p;
+// }
+// Node *SList::addLast(const HocSinh){
+//     Node *q = CreatNode(HocSinh);
+//     q->next = p->next;
+//     p->next=q;
+//     size++;
+// }
 HocSinh::HocSinh():Diem(){
 	Lop ="";
 	MSHS="";
