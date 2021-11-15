@@ -387,9 +387,8 @@ void quanlyHS::ThemHS(){
 void quanlyHS::TimKiemID(string H){
 	for(int i = 0 ;i < this->HS.size();i++){
 		if(HS.at(i)->getMSHS()==H){
-			  HS.search();
-			
-			}
+			  HS.at(i)->Xuat4();
+		}
 	}
 }
 void menu(){
@@ -449,9 +448,10 @@ void menu(){
 			        if(daNhap){
                      cout<<"\n Ban  chon Xoa 1 Hoc Sinh !";
                      string h;
-                     cout<<"\n Nhap Ma id can xoa ";
+                     cout<<"\n Nhap Ma id can xoa : ";
                      fflush(stdin);
                      getline(cin,h);
+                     
                      k.XoaHSID(h);
                      cout<<"\n\t\t\t\t\tTHONG TIN SAU KHI XOA LA  : "<<endl;
                      k.XuatDS();
@@ -466,10 +466,15 @@ void menu(){
             case 4:
             	     system("cls");
 			         if(daNhap){
-                     cout<<"\n Ban Chon tim hoc sinh bang id  :";
-             
-                     cout<<"\n\t\t\t\t\tTHONG TIN SAU KHI XOA LA  : "<<endl;
-                     k.XuatDS();
+                     cout<<"\n Ban Chon tim hoc sinh bang id  !";
+                     
+                     string h;
+                     cout<<"\n Nhap Ma id can tim : ";
+                     fflush(stdin);
+                     getline(cin,h);
+                     k.TimKiemID(h);
+                    //  cout<<"\n\t\t\t\t\tTHONG TIN SAU KHI XOA LA  : "<<endl;
+                    //  k.XuatDS();
                     }
 			         else{
                        cout<<"\\t\t\t\tnNhap DS nhan vien truoc!!!!";
