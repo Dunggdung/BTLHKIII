@@ -60,7 +60,7 @@ void NgaySinh::Nhap1()
 }
 bool NgaySinh::KiemTra(){
 {
-    //ki?m tra ngày tháng
+    //ki?m tra ngï¿½y thï¿½ng
     bool KiemTra = true;
     if (Thang < 0 || Thang > 12)
     {
@@ -304,15 +304,18 @@ void HocSinh::setSTT(int STT){
 }
 void HocSinh::Xuat4(){
 	HocSinh A;
-	cout<<"\t\t\t\t\t\t\t\t\t THONG TIN HOC SINH \n"<<endl;
-   	cout<<"\t"<<setw(15)<<left<<"STT "<<setw(15)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(15)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<endl;
-   	cout<<"\t"<<setfill('-')<<setw(153)<<"-";
+	// cout<<"\t\t\t\t\t\t\t\t\t THONG TIN HOC SINH \n"<<endl;
+   	// cout<<"\t"<<setw(15)<<left<<"STT "<<setw(15)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(15)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<endl;
+   	// cout<<"\t"<<setfill('_')<<setw(153)<<"_";
    	cout<<setfill(' ')<<endl;
     cout<<"\t"<<setw(15)<<left<<A.STT<<setw(15)<<left<<Ten<<setw(15)<<left<<DiaChi<<setw(15)<<left<<MSHS<<left<<Ngay<<"/"<<Thang<<"/"<<setw(12)<<left<<Nam<<setw(15)<<left<<Toan<<setw(15)<<left<<Ly<<setw(15)<<left<<Van<<setw(15)<<setw(15)<<left<<Su<<setw(15)<<left<<Dia<<setw(15)<<left<<DTB<<endl;
-    cout<<"\t"<<setfill('_');
-    cout<<setw(160)<<"_"<<endl;
-    cout<<setfill(' ')<<endl;
+    cout<<"\t"<<setfill('-');
+    cout<<setw(153)<<"-"<<endl;
+    // cout<<setfill(' ')<<endl;
 }
+// void xuatthongtinchung{
+    
+// }
 string HocSinh::getMSHS(){
 	return MSHS;
 }
@@ -341,8 +344,12 @@ class quanlyHS{
  }
 void quanlyHS:: XuatDS(){
 	 int stt = 1;
+    cout<<"\n\t\t\t\t\t\t\t\t\t THONG TIN HOC SINH \n"<<endl;
+   	cout<<"\t"<<setw(15)<<left<<"STT "<<setw(15)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(15)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<endl;
+   	cout<<"\t"<<setfill('_')<<setw(153)<<"_";
+   	cout<<setfill(' ')<<endl;
 	for(int i = 0 ;i < this->HS.size();i++){
-		cout<<"\n\t\t\t\t\t\t\t\tThong Tin hoc sinh thu  "<<i+1<<endl;
+		// cout<<"\n\t\t\t\t\t\t\t\tThong Tin hoc sinh thu  "<<i+1<<endl;
 		this->HS.at(i)->setSTT(stt);
 		this->HS.at(i)->Xuat4();
 		 stt++;

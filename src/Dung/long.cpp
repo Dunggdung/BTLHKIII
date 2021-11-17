@@ -327,6 +327,7 @@ class quanlyHS{
 		  void SapXepDTB();
 		  void SapXepName();
 		  void XepLoaiHS();  
+          void file(ofstream &file);
 		 
 };
  void quanlyHS::NhapDS(int n){
@@ -398,6 +399,9 @@ void quanlyHS::TimKiemID(string H){
 			HS.at(i)->Xuat4();
 		}
 	}
+}
+void quanlyHS::file(ofstream &file){
+    
 }
 void menu(){
     int n;
