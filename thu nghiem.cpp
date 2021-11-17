@@ -5,6 +5,7 @@
 #include<math.h>
 #include<conio.h>
 #include <vector>
+#include<fstream>
 using namespace std;
 class  NgaySinh{// diem lay cua nguoi
 	protected:
@@ -114,6 +115,7 @@ class Nguoi: public NgaySinh{// hoc sinh lay cua nguoi
     	void Nhap2();
     	void Xuat2();
     	string getTen();
+    	string getDiaChi();
 };
 Nguoi::	Nguoi():NgaySinh(){
 	this->DiaChi="";
@@ -143,6 +145,9 @@ void Nguoi::Xuat2(){
 }
 string Nguoi:: getTen(){
 	 return Ten;
+}
+string Nguoi::getDiaChi(){
+	return DiaChi;
 }
 class Diem: public Nguoi {
 	protected:
@@ -270,6 +275,7 @@ class HocSinh: public Diem{
 	    void Nhap4();
 	    void Xuat4();
 	    string getMSHS();
+	     void setSTT(int STT);
 };
 int HocSinh::STT=0;
 HocSinh::HocSinh():Diem(){
@@ -293,20 +299,19 @@ HocSinh::~HocSinh(){
     fflush(stdin);
     getline(cin,MSHS);
 }
-
-
+void HocSinh::setSTT(int STT){
+    this->STT=STT;
+}
 void HocSinh::Xuat4(){
 	HocSinh A;
-	STT++;
-	// stt bang thuoc tinh tinh
-	// ham setw no tu can do dong tu trai sang phai ghi ki tu tu phai sang trai
-	cout<<"\t\t\t\t\t THONG TIN HOC SINH \n"<<endl;
-   	cout<<"\t\t"<<setw(8)<<left<<"STT "<<setw(25)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(10)<<left<<"MSHS"<<setw(25)<<left<<"Ngay Sinh"<<endl;
-   	cout<<"\t\t"<<setfill('-');
-    cout<<setw(70)<<"-"<<endl;
-    cout<<setfill(' ');
-    cout<<"\t\t"<<setw(8)<<left<<A.STT<<setw(25)<<left<<Ten<<setw(15)<<left<<DiaChi<<setw(10)<<left<<MSHS<<left<<Ngay<<"/"<<Thang<<"/"<<Nam<<endl;
-	Diem::Xuat3();
+	cout<<"\t\t\t\t\t\t\t\t\t THONG TIN HOC SINH \n"<<endl;
+   	cout<<"\t"<<setw(15)<<left<<"STT "<<setw(15)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(15)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<endl;
+   	cout<<"\t"<<setfill('-')<<setw(153)<<"-";
+   	cout<<setfill(' ')<<endl;
+    cout<<"\t"<<setw(15)<<left<<A.STT<<setw(15)<<left<<Ten<<setw(15)<<left<<DiaChi<<setw(15)<<left<<MSHS<<left<<Ngay<<"/"<<Thang<<"/"<<setw(12)<<left<<Nam<<setw(15)<<left<<Toan<<setw(15)<<left<<Ly<<setw(15)<<left<<Van<<setw(15)<<setw(15)<<left<<Su<<setw(15)<<left<<Dia<<setw(15)<<left<<DTB<<endl;
+    cout<<"\t"<<setfill('_');
+    cout<<setw(160)<<"_"<<endl;
+    cout<<setfill(' ')<<endl;
 }
 string HocSinh::getMSHS(){
 	return MSHS;
@@ -318,12 +323,11 @@ class quanlyHS{
           void NhapDS(int n);
 		  void XuatDS();
 		  void XoaHSID(string H);
-		  void TimKIemID();	
-		  void ThemHS(HocSinh b);
+		  void TimKiemID(string &h);	
+		  void ThemHS();
 		  void SapXepDTB();
 		  void SapXepName();
-		  void XepLoaiHS();  
-		 
+ 		  void XepLoaiHS(); 	 
 };
  void quanlyHS::NhapDS(int n){
  	  HocSinh *hs;
@@ -336,9 +340,12 @@ class quanlyHS{
  	
  }
 void quanlyHS:: XuatDS(){
+	 int stt = 1;
 	for(int i = 0 ;i < this->HS.size();i++){
-		cout<<"\n\t\t\t\tThong Tin hoc sinh thu  "<<i+1<<endl;
+		cout<<"\n\t\t\t\t\t\t\t\tThong Tin hoc sinh thu  "<<i+1<<endl;
+		this->HS.at(i)->setSTT(stt);
 		this->HS.at(i)->Xuat4();
+		 stt++;
 	}
 } 
 void quanlyHS::SapXepDTB(){
@@ -371,153 +378,227 @@ void quanlyHS::XoaHSID(string H){
 	for(int i = 0 ;i < this->HS.size();i++){
 		if(HS.at(i)->getMSHS()==H){
 			  	HS.erase(HS.begin()+(i));
-			
-			}
+			  	break;
+		}
+		else{
+			cout<<"\n\t\t\t\t KHONG CO MA HOC SINH NAY !!";
+			break;
+		}
 	}
 }
-void quanlyHS::ThemHS(HocSinh b){
+void quanlyHS::ThemHS(){
+	 HocSinh *hs;
 	for(int i = 0 ;i < this->HS.size();i++){
-	    HS.insert (HS.begin (), HS.at(i));
+		cout<<endl;
+		hs= new HocSinh;
+        hs->Nhap4();
+	    HS.push_back(hs);
+		break;	
 	}
 }
+
+     
+void quanlyHS::XepLoaiHS(){
+	for(int i = 0 ;i < this->HS.size();i++){
+		if(HS.at(i)->getDTB() >= 8){
+			 cout<<"\n\t HOC SINH XEP LOAI GIOi \n";
+			 HS.at(i)->Xuat4();
+			 cout<<setfill('=');
+             cout<<setw(140)<<"="<<endl;
+             cout<<setfill(' ');
+		}
+		else if( HS.at(i)->getDTB()<8 && HS.at(i)->getDTB() >= 6.5 )	{
+				cout<<"\n\n\t HOC SINH XEP LOAI KHA \n";
+			    HS.at(i)->Xuat4();
+			    cout<<setfill('=');
+                cout<<setw(170)<<"<=>"<<endl;
+                cout<<setfill(' ');
+		}   
+		else if( HS.at(i)->getDTB() <6.5 && HS.at(i)->getDTB() >= 5){
+			 cout<<"\n\n\t HOC SINH XEP LOAI TRUNG BINH \n";
+		    	HS.at(i)->Xuat4();
+		    	cout<<setfill('=');
+                cout<<setw(170)<<"="<<endl;
+                cout<<setfill(' ');
+		}   
+		
+		else{
+			
+			 cout<<"\n\n\t HOC SINH XEP LOAI YEU \n";
+		    	HS.at(i)->Xuat4();
+		    	cout<<setfill('=');
+                cout<<setw(170)<<"="<<endl;
+                cout<<setfill(' ');
+		}  
+		
+	}
+}
+void quanlyHS::TimKiemID(string &h){
+     for(int i = 0 ;i < this->HS.size();i++){
+		if(HS.at(i)->getMSHS()==h){
+		   	HS.at(i)->Xuat4();
+		   	break;
+		}
+		else{
+			cout<<"\n\t\t KHONG CO MA SO HOC SINH CAN TIM.";
+			break;
+		}
+	}
+}		
 void menu(){
     int n;
     do{
 		cout<<" Nhap So Luong Hoc Sinh : ";
 		cin>>n;
 	}while(n<=0);
-		quanlyHS k;
-	char fileName[] = "employee.txt";
+	quanlyHS k;
+	HocSinh h;
 	int chon,b, flat = 1;
 	bool daNhap = false ;
 	while(flat){
 	    system("cls");
-        cout  <<"\t\t\t\t"<< "       CHUONG TRINH QUAN LY HOC SINH C/C++\n             ";
-        cout  <<"\t\t"<< "*************************MENU******************************\n";
-        cout  <<"\t\t\t"<< "**      1. Nhap thong tin hoc sinh                       **\n";
-        cout  <<"\t\t\t"<< "**      2. Xuat thong tin hoc sinh.                      **\n";
-        cout  <<"\t\t\t"<< "**      3. Xoa hoc sinh  boi ID.                         **\n";
-        cout  <<"\t\t\t"<< "**      4. Tim kiem sinh vien theo ID.                   **\n";
-        cout  <<"\t\t\t"<< "**      5. Them 1 hoc sinh .                             **\n";  
-        cout  <<"\t\t\t"<< "**      6. Sap xep sinh vien theo diem trung binh .      **\n";
-        cout  <<"\t\t\t"<< "**      7. Xep loai hoc sinh .                           **\n";  
-        cout  <<"\t\t\t"<< "**      8. Sap xep sinh vien theo ten.                   **\n";
-        cout  <<"\t\t\t"<< "**      9. Thong ke sinh vien theo tinh                  **\n";
-        cout  <<"\t\t\t"<< "**      10. Ghi danh sach hoc sinh vao file.             **\n";
-        cout  <<"\t\t\t"<< "**      0. Thoat                                         **\n";
-        cout  <<"\t\t\t"<< "***********************************************************\n";
+        cout  <<"\t\t\t\t\t\t\t\t"<< "       CHUONG TRINH QUAN LY HOC SINH C/C++\n             ";
+        cout  <<"\t\t\t\t\t\t"<< "*************************MENU******************************\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      1. Nhap thong tin hoc sinh                       **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      2. Xuat thong tin hoc sinh.                      **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      3. Xoa hoc sinh  boi ID.                         **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      4. Tim kiem sinh vien theo ID.                   **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      5. Them 1 hoc sinh .                             **\n";  
+        cout  <<"\t\t\t\t\t\t\t"<< "**      6. Sap xep sinh vien theo diem trung binh .      **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      7. Xep loai hoc sinh .                           **\n";  
+        cout  <<"\t\t\t\t\t\t\t"<< "**      8. Sap xep sinh vien theo ten.                   **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      9. Ghi danh sach hoc sinh vao file.              **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "**      0. Thoat                                         **\n";
+        cout  <<"\t\t\t\t\t\t\t"<< "***********************************************************\n";
         cout  << "Nhap tuy chon: ";
         cin >> chon;
         switch(chon){
             case 1:
-            		cout<<"\n Ban Da Chon Nhap Thong Tin  Hoc Sinh !";
+            		cout<<"\n\t\t\t\t Ban Da Chon Nhap Thong Tin  Hoc Sinh !";
 			        k.NhapDS(n);
-			        cout<<"\n\t\t\t\t\t Ban da nhap thanh cong !\n";
+			        cout<<"\n\t\t\t\t\t\t\t\t\t Ban da nhap thanh cong !\n";
 			        daNhap=true;
-		         	cout<<"\n\t\t\t\tVui long nhap phim bat ki de tiep tuc !";
+		         	cout<<"\n\t\t\t\t\t\t\t\tVui long nhap phim bat ki de tiep tuc !";
 		        	getch();
 		        	break;
                 
             case 2: 
                      system("cls");
 			        if(daNhap){
-                       cout<<"\n Ban Da Chon Xuat Thong Tin  Hoc Sinh!";
+                       cout<<"\n\t\t\t\t Ban Da Chon Xuat Thong Tin  Hoc Sinh!";
                       k.XuatDS();
                     }
 			         else{
-                       cout<<"\\t\t\t\tnNhap DS nhan vien truoc!!!!";
+                       cout<<"\t\t\t\t\t\t\t\tNhap danh sach hoc sinh truoc!!!!";
                      }
-                      cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
+                      cout<<"\n\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
                    
             case 3:
             	     system("cls");
 			        if(daNhap){
-                     cout<<"\n Ban  chon Xoa 1 Hoc Sinh !";
+                     cout<<"\n\t\t\t\t Ban  chon Xoa 1 Hoc Sinh !";
                      string h;
-                     cout<<"\n Nhap Ma id can xoa ";
+                     cout<<"\n\t\t\t\t Nhap Ma id can xoa ";
                      fflush(stdin);
                      getline(cin,h);
                      k.XoaHSID(h);
-                     cout<<"\n\t\t\t\t\tTHONG TIN SAU KHI XOA LA  : "<<endl;
+                     cout<<"\n\t\t\t\t\t\t\t\t\t THONG TIN CON LAI SAU KHI XOA LA  : "<<endl;
                      k.XuatDS();
                     }
 			         else{
-                       cout<<"\\t\t\t\tnNhap DS nhan vien truoc!!!!";
+                       cout<<"\n\t\t\t\t\t\t\t\tNhap danh sach hoc sinh truoc!!!!";
                      }
-                      cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
+                      cout<<"\n\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
                 
             case 4:
             	     system("cls");
-			        if(daNhap){
-                    cout<<"\n Ban da chon them 1 hoc sinh !";
-                    HocSinh d;
-                    d.Nhap4();
-                   k.ThemHS(d);
-                     cout<<"\n\t\t\t\t\tTHONG TIN SAU KHI XOA LA  : "<<endl;
-                     k.XuatDS();
+			         if(daNhap){
+                     cout<<"\n\t\t\t\t Ban Chon tim hoc sinh bang id  :";
+                     string x;
+                     cout<<"\n\t\t\t\t Nhap ID can tim  : ";
+                     fflush(stdin);
+                     getline(cin,x);
+                     k.TimKiemID(x);
                     }
 			         else{
-                       cout<<"\\t\t\t\tnNhap DS nhan vien truoc!!!!";
+                       cout<<"\n\t\t\t\t\t\t\t\tNhap danh sach hoc sinh  truoc!!!!";
                      }
-                      cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
+                      cout<<"\n\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
-               
+                   
             case 5:
             	    system("cls");
 			        if(daNhap){
-                       cout<<"\n Ban da chon them  Hoc Sinh : ";
-                      
+                       cout<<"\n\n\t\t\t\t Ban da chon them 1 Hoc Sinh ( vao cuoi danh sach): " ;                 
+						k.ThemHS();
+                        k.XuatDS();
                     }
 			         else{
-                       cout<<"\\t\t\t\tnNhap DS nhan vien truoc!!!!";
+                       cout<<"\t\t\t\t\t\t\t\tNhap danh sach hoc sinh truoc!!!!";
                      }
-                      cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
+                      cout<<"\n\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
             	 
                 
             case 6:
+            	 system("cls");
             	 if(daNhap){
-                       cout<<"\n\t\t\t\t\tSap xep Diem TB  (Tang Dan) : ";
+                       cout<<"\n\t\t\t\t\t\t\t\t\tSap xep Diem TB  (Tang Dan) : ";
                         k.SapXepDTB();
                         k.XuatDS();
                     }
 			         else{
-                       cout<<"\\t\t\t\tnNhap DS nhan vien truoc!!!!";
+                       cout<<"\t\t\t\t\t\t\t\tNhap danh sach hoc sinh truoc!!!!";
                      }
-                      cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
+                      cout<<"\n\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
                 
             case 7:
+            	    system("cls");
+			        if(daNhap){
+                       cout<<"\n\n\t\t\t\t Ban da chon  xep loai hoc sinh: " ;  
+					   k.XepLoaiHS();               
+				    }
+			         else{
+                       cout<<"\\t\t\t\t\t\t\t\tNhap danh sach hoc sinh truoc!!!!";
+                     }
+                      cout<<"\n\t\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
+                      getch();
+                      break;
                 
                    
             case 8:
+            	 system("cls");
             	if(daNhap){
-                       cout<<"\n\t\t\t\t\tSap xep Diem TB  (Tang Dan) : ";
+                       cout<<"\n\t\t\t\t\t\t\t\t\tSap xep Diem TB  (Tang Dan) : ";
                         k.SapXepName();
                         k.XuatDS();
                     }
 			         else{
-                       cout<<"\\t\t\t\tnNhap DS nhan vien truoc!!!!";
+                       cout<<"\t\t\t\t\t\t\t\tNhap danh sach hoc sinh truoc!!!!";
                      }
-                      cout<<"\n\t\t\t\t\tBam phim bat ky de tiep tuc!";
+                      cout<<"\n\t\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
-                
-    
+             case 9:
+             	 
                
             case 0:
+		            printf("\n\t\t\t\t\t\t\t\t\t BAN DA CHON THOAT CHUONG TRINH!");
+		            flat = 0;
+		            break;
                
             default:
-                cout << "\n\t\t\t\tKhong co chuc nang nay!";
-                cout << "\n\t\t\t\tHay chon chuc nang trong hop menu.";
-                break;
+                 cout << "\n\t\t\t\t\t\t\t\tKhong co chuc nang nay!";
+                 cout << "\n\t\t\t\t\t\t\t\tHay chon chuc nang trong hop menu.";
+                 break;
         }
     }
 }
