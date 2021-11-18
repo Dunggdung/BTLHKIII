@@ -5,7 +5,7 @@
 #include<math.h>
 #include<conio.h>
 #include <vector>
-#include <fstream>
+#include<fstream>
 using namespace std;
 class  NgaySinh{// diem lay cua nguoi
 	protected:
@@ -17,9 +17,6 @@ class  NgaySinh{// diem lay cua nguoi
    	     void Nhap1();
    	     void Xuat1();
    	     bool KiemTra();
-         int getNgay();
-         int getThang();
-         int getNam();
 };
 NgaySinh::NgaySinh(){
 	this->Ngay=0;
@@ -61,7 +58,7 @@ void NgaySinh::Nhap1()
 }
 bool NgaySinh::KiemTra(){
 {
-    //ki?m tra ng�y th�ng
+    //ki?m tra ngï¿½y thï¿½ng
     bool KiemTra = true;
     if (Thang < 0 || Thang > 12)
     {
@@ -105,15 +102,6 @@ bool NgaySinh::KiemTra(){
 }
 void NgaySinh::Xuat1(){
 	cout<<Ngay<<"/"<<Thang<<"/"<<Nam;
-}
-int NgaySinh::getNgay(){
-    return Ngay;
-}
-int NgaySinh::getThang(){
-    return Thang;
-}
-int NgaySinh::getNam(){
-    return Nam;
 }
 class Nguoi: public NgaySinh{// hoc sinh lay cua nguoi
 	protected:
@@ -175,12 +163,7 @@ class Diem: public Nguoi {
 	 	void Nhap3();
 		void Xuat3();
 		float getDTB();
-        float getToan();
-        float getLy();
-        float getHoa();
-        float getVan();
-        float getSu();
-        float getDia();
+	
 };
 
 Diem::Diem():Nguoi(){
@@ -267,24 +250,6 @@ void Diem::Nhap3() {
 float Diem::getDTB(){
 	return DTB;
 }
-float Diem::getToan(){
-    return Toan;
-}
-float Diem::getLy(){
-    return Ly;
-}
-float Diem::getHoa(){
-    return Hoa;
-}
-float Diem::getVan(){
-    return Van;
-}
-float Diem::getSu(){
-    return Su;
-}
-float Diem::getDia(){
-    return Dia;
-}
 // void Diem:: Xuat3(){
 // 	Diem a;
 //     cout<<"\n\t\t\t\t\t  DIEM CUA HOC SINH: "<<endl;
@@ -300,19 +265,17 @@ float Diem::getDia(){
 class HocSinh: public Diem{
 	private:
 	  string   Lop , MSHS;
-	  int STT;
+	  static int STT;
     public:
     	HocSinh();
     	HocSinh( string Lop, string MSHS);
     	~HocSinh();
 	    void Nhap4();
 	    void Xuat4();
-        void Xuat5();
 	    string getMSHS();
-	    void setSTT(int STT);
-        int getSTT();
+	     void setSTT(int STT);
 };
-// int HocSinh::STT=0;
+int HocSinh::STT=0;
 HocSinh::HocSinh():Diem(){
 	Lop ="";
 	MSHS="";
@@ -337,18 +300,11 @@ HocSinh::~HocSinh(){
 void HocSinh::setSTT(int STT){
     this->STT=STT;
 }
-int HocSinh::getSTT(){
-    return STT;
-}
 void HocSinh::Xuat4(){
-	// HocSinh A;
-    cout<<endl<<"\t\t\t\t"<<setw(5)<<left<<STT<<setw(30)<<left<<Ten<<setw(15)<<left<<DiaChi<<setw(15)<<left<<MSHS<<left<<Ngay<<"/"<<Thang<<"/"<<setw(12)<<left<<Nam<<setw(17)<<left<<Toan<<setw(15)<<left<<Ly<<setw(15)<<left<<Hoa<<setw(15)<<left<<Van<<setw(15)<<setw(15)<<left<<Su<<setw(15)<<left<<Dia<<setw(15)<<left<<DTB<<endl;
-    cout<<"\t\t\t\t"<<setfill('-')<<setw(185)<<"-"<<endl;
+	HocSinh A;
+    cout<<endl<<"\t\t\t\t"<<setw(5)<<left<<A.STT<<setw(30)<<left<<Ten<<setw(15)<<left<<DiaChi<<setw(15)<<left<<MSHS<<left<<Ngay<<"/"<<Thang<<"/"<<setw(12)<<left<<Nam<<setw(15)<<left<<Toan<<setw(15)<<left<<Ly<<setw(15)<<left<<Van<<setw(15)<<setw(15)<<left<<Su<<setw(15)<<left<<Dia<<setw(15)<<left<<DTB<<endl;
+    cout<<"\t\t\t\t"<<setfill('-')<<setw(170)<<"-"<<endl;
     cout<<setfill(' ');
-}
-void HocSinh::Xuat5(){
-	// HocSinh A;
-    cout<<endl<<"\t\t\t\t"<<setw(5)<<left<<STT<<setw(30)<<left<<Ten<<setw(15)<<left<<DiaChi<<setw(15)<<left<<MSHS<<left<<Ngay<<"/"<<Thang<<"/"<<setw(12)<<left<<Nam<<setw(17)<<left<<Toan<<setw(15)<<left<<Ly<<setw(15)<<left<<Hoa<<setw(15)<<left<<Van<<setw(15)<<setw(15)<<left<<Su<<setw(15)<<left<<Dia<<setw(15)<<left<<DTB;
 }
 string HocSinh::getMSHS(){
 	return MSHS;
@@ -359,15 +315,13 @@ class quanlyHS{
        public:
             void NhapDS(int n);
             void XuatThongTinChung();
-            void XuatThongTinChung2();
 		    void XuatDS();
             void XoaHSID(string H);
             void TimKiemID(string &h);	
             void ThemHS();
             void SapXepDTB();
             void SapXepName();
-            void XepLoaiHS(); 	
-            void exportHS(ofstream &file); 
+            void XepLoaiHS(); 	 
 };
  void quanlyHS::NhapDS(int n){
  	  HocSinh *hs;
@@ -382,14 +336,8 @@ class quanlyHS{
  }
  void quanlyHS::XuatThongTinChung(){
         cout<<endl<<"\t\t\t\t\t\t\t\t\t\t\t\t\t\tTHONG TIN HOC SINH \n"<<endl;
-   	    cout<<"\t\t\t\t"<<setw(5)<<left<<"STT "<<setw(30)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(18)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Hoa"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<endl;
-   	    cout<<"\t\t\t\t"<<setw(185)<<setfill('_')<<"_"<<endl;
-        cout<<setfill(' ');
-}    
- void quanlyHS::XuatThongTinChung2(){
-        cout<<endl<<"\t\t\t\t\t\t\t\t\t\t\t\t\t\tTHONG TIN HOC SINH \n"<<endl;
-   	    cout<<"\t\t\t\t"<<setw(5)<<left<<"STT "<<setw(30)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(18)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Hoa"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<setw(15)<<left<<"Xep Loai"<<endl;
-   	    cout<<"\t\t\t\t"<<setw(195)<<setfill('_')<<"_"<<endl;
+   	    cout<<"\t\t\t\t"<<setw(5)<<left<<"STT "<<setw(30)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(15)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"Diem Trung Binh"<<endl;
+   	    cout<<"\t\t\t\t"<<setw(170)<<setfill('_')<<"_"<<endl;
         cout<<setfill(' ');
 }    
 void quanlyHS:: XuatDS(){
@@ -448,56 +396,52 @@ void quanlyHS::ThemHS(){
 
      
 void quanlyHS::XepLoaiHS(){
-    XuatThongTinChung2();
 	for(int i = 0 ;i < this->HS.size();i++){
 		if(HS.at(i)->getDTB() >= 8){
-			HS.at(i)->Xuat5(); cout<<setw(15)<<left<<"GIOI \n";
-            cout<<"\t\t\t"<<setfill('-')<<setw(195)<<"-"<<endl;
-            cout<<setfill(' ');
+			 cout<<"\n\t HOC SINH XEP LOAI GIOi \n";
+			 HS.at(i)->Xuat4();
+			 cout<<setfill('=');
+             cout<<setw(140)<<"="<<endl;
+             cout<<setfill(' ');
 		}
-		else if( HS.at(i)->getDTB()<8 && HS.at(i)->getDTB() >= 6.5 ){
-			HS.at(i)->Xuat5(); cout<<setw(15)<<left<<"KHA \n";
-            cout<<"\t\t\t"<<setfill('-')<<setw(195)<<"-"<<endl;
-            cout<<setfill(' ');
+		else if( HS.at(i)->getDTB()<8 && HS.at(i)->getDTB() >= 6.5 )	{
+				cout<<"\n\n\t HOC SINH XEP LOAI KHA \n";
+			    HS.at(i)->Xuat4();
+			    cout<<setfill('=');
+                cout<<setw(170)<<"<=>"<<endl;
+                cout<<setfill(' ');
 		}   
 		else if( HS.at(i)->getDTB() <6.5 && HS.at(i)->getDTB() >= 5){
-			HS.at(i)->Xuat5(); cout<<setw(15)<<left<<"TRUNG BINH \n";
-            cout<<"\t\t\t"<<setfill('-')<<setw(195)<<"-"<<endl;
-            cout<<setfill(' ');
+			 cout<<"\n\n\t HOC SINH XEP LOAI TRUNG BINH \n";
+		    	HS.at(i)->Xuat4();
+		    	cout<<setfill('=');
+                cout<<setw(170)<<"="<<endl;
+                cout<<setfill(' ');
 		}   
 		
 		else{
-			HS.at(i)->Xuat5(); cout<<setw(15)<<left<<"YEU \n";
-            cout<<"\t\t\t"<<setfill('-')<<setw(195)<<"-"<<endl;
-            cout<<setfill(' ');
+			
+			 cout<<"\n\n\t HOC SINH XEP LOAI YEU \n";
+		    	HS.at(i)->Xuat4();
+		    	cout<<setfill('=');
+                cout<<setw(170)<<"="<<endl;
+                cout<<setfill(' ');
 		}  
 		
 	}
 }
 void quanlyHS::TimKiemID(string &h){
-    XuatThongTinChung();
      for(int i = 0 ;i < this->HS.size();i++){
 		if(HS.at(i)->getMSHS()==h){
 		   	HS.at(i)->Xuat4();
 		   	break;
 		}
+		else{
+			cout<<"\n\t\t KHONG CO MA SO HOC SINH CAN TIM.";
+			break;
+		}
 	}
-}	
-void quanlyHS::exportHS(ofstream &file){
-    int stt = 1;
-    file<<endl<<"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tTHONG TIN HOC SINH \n"<<endl;
-   	file<<"\t\t\t\t"<<setw(5)<<left<<"STT "<<setw(30)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(18)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Hoa"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<endl;
-   	file<<"\t\t\t\t"<<setw(185)<<setfill('_')<<"_"<<endl;
-    file<<setfill(' ');
-	for(int i = 0 ;i < this->HS.size();i++){
-		this->HS.at(i)->setSTT(stt);
-		file<<endl<<"\t\t\t\t"<<setw(5)<<left<<HS.at(i)->getSTT()<<setw(30)<<left<<HS.at(i)->getTen()<<setw(15)<<left<<HS.at(i)->getDiaChi()<<setw(15)<<left<<HS.at(i)->getMSHS()<<left<<HS.at(i)->getNgay()<<"/"<<HS.at(i)->getThang()<<"/"<<setw(12)<<left<<HS.at(i)->getNam()<<setw(15)<<left<<HS.at(i)->getToan()<<setw(15)<<left<<HS.at(i)->getLy()<<setw(15)<<left<<HS.at(i)->getHoa()<<setw(15)<<left<<HS.at(i)->getVan()<<setw(15)<<setw(15)<<left<<HS.at(i)->getSu()<<setw(15)<<left<<HS.at(i)->getDia()<<setw(15)<<left<<HS.at(i)->getDTB()<<endl;
-        file<<"\t\t\t\t"<<setfill('-')<<setw(185)<<"-"<<endl;
-        file<<setfill(' ');
-		stt++;
-	}
-    file.close();
-}	
+}		
 void menu(){
     int n;
     do{
@@ -506,7 +450,6 @@ void menu(){
 	}while(n<=0);
 	quanlyHS k;
 	HocSinh h;
-    ofstream file("./src/file/data.txt");
 	int chon,b, flat = 1;
 	bool daNhap = false ;
 	while(flat){
@@ -515,12 +458,12 @@ void menu(){
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "*******************************MENU********************************\n";
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              1. Nhap thong tin hoc sinh                       **\n";
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              2. Xuat thong tin hoc sinh.                      **\n";
-        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              3. Xoa hoc sinh boi ID.                          **\n";
-        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              4. Tim kiem hoc sinh theo ID.                    **\n";
+        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              3. Xoa hoc sinh  boi ID.                         **\n";
+        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              4. Tim kiem sinh vien theo ID.                   **\n";
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              5. Them 1 hoc sinh.                              **\n";  
-        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              6. Sap xep hoc sinh theo diem trung binh.        **\n";
+        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              6. Sap xep sinh vien theo diem trung binh.       **\n";
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              7. Xep loai hoc sinh.                            **\n";  
-        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              8. Sap xep hoc sinh theo ten.                    **\n";
+        cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              8. Sap xep sinh vien theo ten.                   **\n";
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              9. Ghi danh sach hoc sinh vao file.              **\n";
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "**              0. Thoat.                                        **\n";
         cout  <<"\t\t\t\t\t\t\t\t\t\t\t"<< "*******************************************************************\n";
@@ -553,13 +496,13 @@ void menu(){
             case 3:
             	     system("cls");
 			        if(daNhap){
-                     cout<<"\n\t\t\t\t\t\t\t\t\t\t\t\t\t     Ban  chon Xoa 1 Hoc Sinh !";
+                     cout<<"\n\t\t\t\t\t\t\t\t\t\t\t\t\tBan  chon Xoa 1 Hoc Sinh !";
                      string h;
                      cout<<"\n\t\t\t\t Nhap Ma id can xoa ";
                      fflush(stdin);
                      getline(cin,h);
                      k.XoaHSID(h);
-                     cout<<"\n\t\t\t\t THONG TIN CON LAI SAU KHI XOA LA  : "<<endl;
+                     cout<<"\n\t\t\t\t\t\t\t\t\t THONG TIN CON LAI SAU KHI XOA LA  : "<<endl;
                      k.XuatDS();
                     }
 			         else{
@@ -604,7 +547,7 @@ void menu(){
             case 6:
             	 system("cls");
             	 if(daNhap){
-                       cout<<"\n\t\t\t\tSap xep Diem TB  (Tang Dan) : ";
+                       cout<<"\n\t\t\t\t\t\t\t\t\tSap xep Diem TB  (Tang Dan) : ";
                         k.SapXepDTB();
                         k.XuatDS();
                     }
@@ -642,10 +585,9 @@ void menu(){
                       cout<<"\n\t\t\t\t\t\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
-            case 9:
-             	system("cls");
-                k.exportHS(file);
-                break;
+             case 9:
+             	 
+               
             case 0:
 		            printf("\n\t\t\t\t\t\t\t\t\t BAN DA CHON THOAT CHUONG TRINH!");
 		            flat = 0;

@@ -320,17 +320,18 @@ string HocSinh::getMSHS(){
 	return MSHS;
 }
 class quanlyHS{
-	  private:
-	  	 vector<HocSinh *> HS;
-       public:
-          void NhapDS(int n);
-		  void XuatDS();
-		  void XoaHSID(string H);
-		  void TimKiemID(string &h);	
-		  void ThemHS();
-		  void SapXepDTB();
-		  void SapXepName();
- 		  void XepLoaiHS(); 	 
+	private:
+      	vector<HocSinh *> HS;
+    public:
+        void NhapDS(int n);
+		void XuatDS();
+		void XoaHSID(string H);
+		void TimKiemID(string &h);	
+		void ThemHS();
+		void SapXepDTB();
+		void SapXepName();
+ 		void XepLoaiHS(); 
+        void file(ofstream &file);	 
 };
  void quanlyHS::NhapDS(int n){
  	  HocSinh *hs;
@@ -349,10 +350,9 @@ void quanlyHS:: XuatDS(){
    	cout<<"\t"<<setfill('_')<<setw(153)<<"_";
    	cout<<setfill(' ')<<endl;
 	for(int i = 0 ;i < this->HS.size();i++){
-		// cout<<"\n\t\t\t\t\t\t\t\tThong Tin hoc sinh thu  "<<i+1<<endl;
 		this->HS.at(i)->setSTT(stt);
 		this->HS.at(i)->Xuat4();
-		 stt++;
+		stt++;
 	}
 } 
 void quanlyHS::SapXepDTB(){
@@ -452,6 +452,23 @@ void quanlyHS::TimKiemID(string &h){
 		}
 	}
 }		
+// void quanlyHS::file(ofstream &file){
+//     // HocSinh A;
+//     int stt = 1;
+//     file<<"\n\t\t\t\t\t\t\t\t\t THONG TIN HOC SINH \n"<<endl;
+//    	file<<"\t"<<setw(15)<<left<<"STT "<<setw(15)<<left<<"Ten"<<setw(15)<<left<<"Dia Chi"<<setw(15)<<left<<"MSHS"<<setw(15)<<left<<"Ngay Sinh"<<setw(15)<<left<<"Toan "<<setw(15)<<left<<"Ly"<<setw(15)<<left<<"Van"<<setw(15)<<left<<"Su"<<setw(15)<<left<<"Dia"<<setw(15)<<"DTB"<<endl;
+//    	file<<"\t"<<setfill('_')<<setw(153)<<"_";
+//    	file<<setfill(' ')<<endl;
+//     for(int i = 0 ;i < this->HS.size();i++){
+// 		this->HS.at(i)->setSTT(stt);
+// 		file<<setfill(' ')<<endl;
+//         file<<"\t"<<setw(15)<<left<<HS.at(i)->STT<<setw(15)<<left<HS.at(i)->Ten<<setw(15)<<left<<HS.at(i)->DiaChi<<setw(15)<<left<<HS.at(i)->MSHS<<left<<HS.at(i)->Ngay<<"/"<<HS.at(i)->Thang<<"/"<<setw(12)<<left<<HS.at(i)->Nam<<setw(15)<<left<<HS.at(i)->Toan<<setw(15)<<left<<HS.at(i)->Ly<<setw(15)<<left<<HS.at(i)->Van<<setw(15)<<setw(15)<<left<<HS.at(i)->Su<<setw(15)<<left<<HS.at(i)->Dia<<setw(15)<<left<<HS.at(i)->DTB<<endl;
+//         file<<"\t"<<setfill('-');
+//         file<<setw(153)<<"-"<<endl;
+// 		stt++;
+// 	}
+//     file.close();
+// }
 void menu(){
     int n;
     do{
@@ -594,15 +611,16 @@ void menu(){
                       cout<<"\n\t\t\t\t\t\t\t\t\tBam phim bat ky de tiep tuc!";
                       getch();
                       break;
-             case 9:
-             	 
+             case 9:system("cls");
+              ofstream file ("./file/data.txt");
+                    break;
                
-            case 0:
+            case 0:system("cls");
 		            printf("\n\t\t\t\t\t\t\t\t\t BAN DA CHON THOAT CHUONG TRINH!");
 		            flat = 0;
 		            break;
                
-            default:
+            default:system("cls");
                  cout << "\n\t\t\t\t\t\t\t\tKhong co chuc nang nay!";
                  cout << "\n\t\t\t\t\t\t\t\tHay chon chuc nang trong hop menu.";
                  break;
