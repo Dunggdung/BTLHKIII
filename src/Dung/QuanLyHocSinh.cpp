@@ -368,13 +368,27 @@ class quanlyHS{
             void SapXepName();
             void XepLoaiHS(); 	
             void exportHS(ofstream &file); 
+            bool check (string h);
 };
+bool quanlyHS::check (string h){
+    for (int i=0; i< this->HS.size();i++){
+        if (h == HS.at(i)->getMSHS())
+         return true;
+    }
+    return false;
+}
  void quanlyHS::NhapDS(int n){
  	  HocSinh *hs;
   	 for(int i=0; i< n; i++){
         cout<<"\n\t\tNhap Thong Tin Cua Hoc Sinh Thu "<<i+1<<endl;
              hs= new HocSinh;
-             hs->Nhap4();
+             do {
+                 hs->Nhap4();
+                 if (check(hs->getMSHS())){
+                     cout<<"Ma So Hoc Sinh Da Ton Tai !"<<endl;
+                     cout <<"Vui Long Nhap Lai Thong Tin!"<<endl;
+                 }
+             }while (check(hs->getMSHS()));
              HS.push_back(hs);
              cout<<"\t\t"<<setw(70)<<setfill('-')<<"-"<<endl;
             cout<<setfill(' ');
@@ -618,7 +632,7 @@ void menu(){
             case 7:
             	    system("cls");
 			        if(daNhap){
-                       cout<<"\n\n\t\t\t\t Ban da chon  xep loai hoc sinh: " ;  
+                       cout<<"\n\n\t\t\t\t Ban da chon xep loai hoc sinh: " ;  
 					   k.XepLoaiHS();               
 				    }
 			         else{
