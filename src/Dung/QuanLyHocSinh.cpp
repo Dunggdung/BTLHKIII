@@ -447,6 +447,9 @@ void quanlyHS::XoaHSID(string H){
 			  	HS.erase(HS.begin()+(i));
 			  	break;
 		}
+        else {
+            cout <<"\t\t\t Khong tim thay MSHS trong danh sach de xoa"<<endl;
+        }
     }    
 }
 void quanlyHS::ThemHS(){
@@ -454,6 +457,13 @@ void quanlyHS::ThemHS(){
 	for(int i = 0 ;i < this->HS.size();i++){
 		cout<<endl;
 		hs= new HocSinh;
+        do {
+                 hs->Nhap4();
+                 if (check(hs->getMSHS())){
+                     cout<<"Ma So Hoc Sinh Da Ton Tai !"<<endl;
+                     cout <<"Vui Long Nhap Lai Thong Tin!"<<endl;
+                 }
+        }while (check(hs->getMSHS()));
         hs->Nhap4();
 	    HS.push_back(hs);
 		break;	
@@ -494,7 +504,9 @@ void quanlyHS::TimKiemID(string &h){
 		if(HS.at(i)->getMSHS()==h){
 		   	HS.at(i)->Xuat4();
 		   	break;
-		}
+		}else {
+            cout << "\t\t\tKhong tim thay MSHS trong danh sach"<<endl;
+        }
 	}
 }	
 void quanlyHS::exportHS(ofstream &file){
